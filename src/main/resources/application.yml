@@ -1,0 +1,28 @@
+spring:
+  session:
+    store-type: jdbc
+    timeout: -1
+    jdbc:
+      initialize-schema: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shopme
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    spring.jpa.database-platform: org.hibernate.dialect.PostgreSQL81Dialect
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.security: DEBUG
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+

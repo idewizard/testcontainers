@@ -15,7 +15,7 @@ public class ListPersonController {
     private final RegisterPersonService registerPersonService;
 
     @GetMapping("/listall")
-    public List<ListPersonResponse> register(){
+    public List<ListPersonResponse> list(){
         return registerPersonService.list();
     }
 

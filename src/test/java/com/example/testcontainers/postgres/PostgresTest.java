@@ -1,4 +1,4 @@
-package com.example.testcontainers;
+package com.example.testcontainers.postgres;
 
 import com.example.testcontainers.controller.request.RegisterPersonRequest;
 import org.junit.Before;
@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -39,7 +40,7 @@ public class PostgresTest{
             .withPassword("postgres");
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         postgreSQLContainer.withInitScript("db/init.sql").start();
     }
 
@@ -60,6 +61,7 @@ public class PostgresTest{
 
     //Teste de integração simples
     @Test
+    @Transactional //Transactional cuida de "limpar" (rollback) os dados a cada teste
     public void registerUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/register")
@@ -71,6 +73,7 @@ public class PostgresTest{
     }
 
     @Test
+    @Transactional
     public void listPersons() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/listall")
